@@ -90,6 +90,44 @@ namespace SATAPIdemo
         {
             Application.Exit();
         }
+
+        private void ChangeIpSuite_Click(object sender, EventArgs e)
+        {
+            uint newIp = ParseIP(SuiteIp.Text);
+            uint newSn = ParseIP(SuiteSn.Text);
+            uint newGw = ParseIP(SuiteGw.Text);
+            if (newIp == 0xffffffff || newSn == 0xffffffff || newGw == 0xffffffff)
+            {
+                MessageBox.Show("错误：指定的 IP、子网或网关地址无效", "Change IP Suite", MessageBoxButtons.OK);
+                return;
+            }
+
+            Result retVal = CurrentCPU.SetIP(newIp, newSn, newGw);
+
+            if (retVal.Succeeded)
+            {
+                MessageBox.Show("修改IP完成", "Change IP Suite", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("错误：修改IP失败", "Change IP Suite", MessageBoxButtons.OK);
+                return;
+            }
+        }
+
+        private void SetProfinetName_Click(object sender, EventArgs e)
+        {
+            Result retVal = CurrentCPU.SetProfinetName(ProfinetName.Text);
+            if (retVal.Succeeded)
+            {
+                MessageBox.Show("修改名称完成", "Change IP Suite", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("错误：修改名称失败", "Change IP Suite", MessageBoxButtons.OK);
+                return;
+            }
+        }
     }
 }
 
